@@ -9,3 +9,9 @@
 /*   Updated: 2018/03/12 21:04:20 by kprytkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "get_next_line.h"
+
+int get_next_line(const int fd, char **line)
+{
+
+}
