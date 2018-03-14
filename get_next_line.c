@@ -13,5 +13,7 @@
 
 int get_next_line(const int fd, char **line)
 {
-
+	printf("%i\n", fd );
+	
+	return (0);
 }
