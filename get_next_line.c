@@ -12,34 +12,36 @@
 #include "get_next_line.h"
 
 // int		i_am_for_reading(int fd, char *buffer)
-char	i_am_for_reading(int fd)
+char		i_am_for_reading(int fd)
 {
-	int		ret;
-	char	*buffer;
-	int		counter;
+	int		read_bytes;
+	char	buffer[BUFF_SIZE + 1];
+	
 
-	counter = 0;
-
-	if (!(buffer = malloc(sizeof(char) * BUFF_SIZE + 1)))
-		return (0);
-	while ((ret = read(fd, buffer, BUFF_SIZE)) > 0)
+	// if (!(buffer = malloc(sizeof(char) * BUFF_SIZE + 1)))
+	// 	return (0);
+	while ((read_bytes = read(fd, buffer, BUFF_SIZE)) > 0)
 	{
-		counter++;
-		printf("%i\n", counter);	}
-	// ret = read(fd, buffer, BUFF_SIZE);
-	buffer[ret] = '\0';
+		buffer[read_bytes] = '|';
+		ft_putstr(buffer);
+	}
+	ft_putchar('\n');
 
 	return(*buffer);
+	
 }
 
 int get_next_line(const int fd, char **line)
 {
 	char	*result_string;
-	int		ret;
+
 	printf("The value of FD: %i\n", fd );
 	printf("BUFF_SIZE = %i\n", BUFF_SIZE );
-	
+	if (fd == -1)
+		return (0);
 	*result_string = i_am_for_reading(fd);
-	ft_putstr(result_string);
+
+	printf("Q!!!:%s\n", result_string );
+
 	return (0);
 }
