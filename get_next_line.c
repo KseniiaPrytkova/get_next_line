@@ -14,27 +14,30 @@
 // int		i_am_for_reading(int fd, char *buffer)
 char		*i_am_for_reading(int fd, char *result_string)
 {
-	int		read_bytes;
-	char	*buffer_for_read;
-	char	*buffer_for_join[BUFF_SIZE + 1];
+	int				read_bytes;
+	char			*buffer_for_read;
+	char			*buffer_for_join[BUFF_SIZE + 1];
 	static int		is_it_first_time;
-	int 	counter;
+	int 			counter;
+	size_t			res_str_len;
 	
 	is_it_first_time = 0;
+	res_str_len = 0;
 	counter = 0;
 	if (!(buffer_for_read = malloc(sizeof(char) * BUFF_SIZE + 1)))
 		return (NULL);
 
 	while ((read_bytes = read(fd, buffer_for_read, BUFF_SIZE)) > 0)
 	{
-		buffer_for_read[read_bytes] = '|';
+		buffer_for_read[read_bytes] = '\0';
+
 		printf("I'M BUFFER: %s\n", buffer_for_read);
-		// ft_putstr(buffer);
 		if (is_it_first_time == 0)
 		{
 			printf("---->>>I'M IN THE 1ST TIME --->>>\n");
 			ft_bzero(result_string, BUFF_SIZE + 1);
-			ft_memccpy(result_string, buffer_for_read, '|', BUFF_SIZE);
+			// ft_memccpy(result_string, buffer_for_read, '\0', BUFF_SIZE);
+			ft_memcpy(result_string, buffer_for_read, BUFF_SIZE);
 			printf("%s\n", result_string );
 			is_it_first_time = 1;
 			printf("CATCH U!!!\n" );
@@ -44,11 +47,11 @@ char		*i_am_for_reading(int fd, char *result_string)
 		{
 			printf("--->>>>i'm in join!!!\n");
 			printf("ITERATION #:%i\n", counter );
+
 			ft_bzero(buffer_for_join, BUFF_SIZE + 1);
-			ft_memccpy(buffer_for_join, buffer_for_read, '|', BUFF_SIZE);
+			ft_memcpy(buffer_for_join, buffer_for_read, BUFF_SIZE);
 
 			printf("BUFFER_FOR_JOIN: %s\n", buffer_for_join );
-
 			printf("result_string HERE:%s\n", result_string );
 
 			result_string = ft_strjoin(result_string, buffer_for_join);
@@ -58,21 +61,16 @@ char		*i_am_for_reading(int fd, char *result_string)
 			printf("\n" );
 		}
 
-	is_it_first_time ++;
-	counter++;
-		// ft_bzero(result_string, BUFF_SIZE + 1);
-		// ft_memccpy(result_string, buffer, '|', BUFF_SIZE );
-		// printf("%s", result_string );
+		is_it_first_time ++;
 		
 	}
+	printf("len of result str: %zu\n", ft_strlen (result_string));
 
-	// read_bytes = read(fd, buffer, BUFF_SIZE);
-	// buffer[read_bytes] = '\0';
-	// 	ft_putstr(buffer);
-	// 	ft_putchar('\n');
-	// ft_bzero(result_string, BUFF_SIZE + 4);
-	// ft_memccpy(result_string, buffer, '\0', BUFF_SIZE );
+	res_str_len = ft_strlen (result_string);
+	result_string[res_str_len] = '\0';
 
+	printf("%c\n", result_string[res_str_len - 1] );
+	
 	return(result_string);
 	
 }
