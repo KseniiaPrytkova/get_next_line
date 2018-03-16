@@ -16,7 +16,7 @@
 # include <stdlib.h>
 # include "libft.h"
 
-# define BUFF_SIZE 815
+# define BUFF_SIZE 816
 
 int		get_next_line(const int fd, char **line);
 

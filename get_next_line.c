@@ -20,12 +20,14 @@ char		*i_am_for_reading(int fd, char *result_string)
 	static int		is_it_first_time;
 	int 			counter;
 	size_t			res_str_len;
-	
+	// char			*pointer_to_result_string;
+
 	is_it_first_time = 0;
 	res_str_len = 0;
 	counter = 0;
 	if (!(buffer_for_read = malloc(sizeof(char) * BUFF_SIZE + 1)))
 		return (NULL);
+
 
 	while ((read_bytes = read(fd, buffer_for_read, BUFF_SIZE)) > 0)
 	{
@@ -37,6 +39,7 @@ char		*i_am_for_reading(int fd, char *result_string)
 			printf("---->>>I'M IN THE 1ST TIME --->>>\n");
 			ft_bzero(result_string, BUFF_SIZE + 1);
 			// ft_memccpy(result_string, buffer_for_read, '\0', BUFF_SIZE);
+			printf("catch seg_fault!\n");
 			ft_memcpy(result_string, buffer_for_read, BUFF_SIZE);
 			printf("%s\n", result_string );
 			is_it_first_time = 1;
@@ -70,7 +73,7 @@ char		*i_am_for_reading(int fd, char *result_string)
 	result_string[res_str_len] = '\0';
 
 	printf("%c\n", result_string[res_str_len - 1] );
-	
+
 	return(result_string);
 	
 }
