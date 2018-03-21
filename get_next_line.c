@@ -9,6 +9,7 @@
 /*   Updated: 2018/03/12 21:04:20 by kprytkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "get_next_line.h"
 
 char	*join_me(char *s1, char const *s2)
@@ -48,51 +49,70 @@ char		*i_am_for_reading(int fd, char *result_string)
 	while ((read_bytes = read(fd, buffer_for_read, BUFF_SIZE)) > 0)
 	{
 		buffer_for_read[read_bytes] = '\0';
-		//printf("I'M BUFFER: %s\n", buffer_for_read);
 		if (!(result_string))
 		{
-			// printf("---->>>I'M IN THE 1ST TIME --->>>\n");
 			if (!(result_string = malloc(sizeof(char) * read_bytes + 1)))
 				return (NULL);
 			ft_bzero(result_string, read_bytes + 1);
 			ft_memcpy(result_string, buffer_for_read, read_bytes);
-			//printf("%s\n", result_string );
 		}
 		else
-		{
-			// printf("--->>>>i'm in join!!!\n");
-			//printf("result_string HERE:%s\n", result_string );
 			result_string = join_me(result_string, buffer_for_read);
-			//printf("AFTER_CONCATENATION: %s\n", result_string );
-			//printf("\n" );
-		}
-		
 	}
-	//printf("len of result str: %zu\n", ft_strlen (result_string));
 	res_str_len = ft_strlen (result_string);
 	result_string[res_str_len] = '\0';
-	//printf("%c\n", result_string[res_str_len - 1] );
-
 	return(result_string);
-	
 }
 
+char	*string_sub(char *s, unsigned int start, size_t len)
+{
+	char	*substring;
+	size_t	string_len;
+	int		i;
+	int		j;
+
+	i = start;
+	j = 0;
+	string_len = ft_strlen(s);
+	if (s && start < string_len + 1 && len < string_len + 1)
+	{
+		if ((substring = malloc(sizeof(char) * len + 1)) == NULL)
+			return (NULL);
+		while (s[i] != '\0')
+		{
+			substring[j] = s[i];
+			i++;
+			j++;
+		}
+		substring[j] = '\0';
+	}
+	free (s);
+	return (substring);
+}
 
 int get_next_line(const int fd, char **line)
 {
 	static char	*result_string;
-	//printf("The value of FD: %i\n", fd );
-	//printf("BUFF_SIZE = %i\n", BUFF_SIZE );
+	int			counter;
+	char		*buffer;
+	int			str_len;
+
 	if (fd == -1)
 		return (0);
-	result_string = i_am_for_reading(fd, result_string);
-	//printf("\n");
-	//printf("I AM HERE --->>>\n");
-	printf("%s\n", result_string );
-	
-	free(result_string);
-	// system("leaks /a.out");
-	// while (1){};
-
+	if (!result_string)
+		result_string = i_am_for_reading(fd, result_string);
+	str_len = ft_strlen(result_string);
+	counter = 0;
+	while (*result_string != '\n' && *result_string != '\0')
+	{
+		result_string++;
+		counter++;
+	}
+	result_string = result_string - counter;
+	buffer = ft_strncpy(ft_strnew(counter), result_string, counter);
+	result_string = string_sub(result_string, counter, (str_len - counter));
+	*line = buffer;
+	printf("%s\n", result_string);
+	free(buffer);
 	return (0);
 }

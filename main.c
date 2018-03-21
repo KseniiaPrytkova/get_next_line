@@ -16,8 +16,9 @@ int		main(int argc, char *argv[])
 		printf("it's more then 1 file as an input!\n");
 
 	fd = open(file_name, O_RDONLY);
-	get_next_line(fd, &line);
-	// printf("%i\n", fd);
+	get_next_line(fd, &line);	
+	get_next_line(fd, &line);	
 
+	printf("%s\n", line);
 	return (0);
 }
