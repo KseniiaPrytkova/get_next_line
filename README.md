@@ -146,6 +146,7 @@ int		i_am_string_maker(const int fd);
 
 ``` C
 __sample.line__
+
 The wind of Mt. Fuji
 I've brought on my fan!
 a gift from Edo
@@ -175,3 +176,5 @@ I've brought on my fan!
 a gift from Edo
 >
 ```
+
+## 2) come back to get_next_line
