@@ -6,11 +6,11 @@ Calling this function in a loop will then allow you to read the text available o
 
 The implementation of this project can be conditionally divided into 2 stages (solely from my point of view):
 
-### 1) read the whole file into a string (how to?)
+## 1) read the whole file into a string (how to?)
 
 Initially it was not obvious to me that reading the file into a string can not be done directly (and without using standard functions). What i mean? It is impossible for example to output the whole string directly on the standart output if you are not allowed to use printf(). In this case you need to use putcar() (this fn simply uses system call write(2)) in the loop and output the string character by character (in the context of C language). So.. Due to the fact that it was necessary to come up with an algorithm for the realization of this task (putting the file into the string), I could not find a specific answer in Google (I wanted to find something like step-by-step instruction). For those who will face such a problem in the future and will be confused, I dicided to write my own instruction, perhaps it will make someone happier or at least improve digestion.
 
-## 1.1 main.c
+### 1.1 main.c
 ``` C
 #include "get_next_line.h"
 #include <stdio.h>
