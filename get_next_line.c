@@ -68,20 +68,18 @@ char	*string_sub(char *s, unsigned int start, size_t len)
 {
 	char	*substring;
 	size_t	string_len;
-	int		i;
 	int		j;
 
-	i = start;
 	j = 0;
 	string_len = ft_strlen(s);
 	if (s && start < string_len + 1 && len < string_len + 1)
 	{
 		if ((substring = malloc(sizeof(char) * len + 1)) == NULL)
 			return (NULL);
-		while (s[i] != '\0')
+		while (start < string_len && j < len)
 		{
-			substring[j] = s[i];
-			i++;
+			substring[j] = s[start];
+			start++;
 			j++;
 		}
 		substring[j] = '\0';
@@ -92,27 +90,26 @@ char	*string_sub(char *s, unsigned int start, size_t len)
 
 int get_next_line(const int fd, char **line)
 {
-	static char	*result_string;
+	static char	*result_string[4864];
 	int			counter;
 	char		*buffer;
 	int			str_len;
 
 	if (fd == -1)
 		return (0);
-	if (!result_string)
-		result_string = i_am_for_reading(fd, result_string);
-	str_len = ft_strlen(result_string);
+	if (!result_string[fd])
+		result_string[fd] = i_am_for_reading(fd, result_string[fd]);
+	str_len = ft_strlen(result_string[fd]);
 	counter = 0;
-	while (*result_string != '\n' && *result_string != '\0')
-	{
-		result_string++;
+	while (*result_string[fd] != '\n' && *result_string[fd] != '\0')
+	{	
+		result_string[fd]++;
 		counter++;
 	}
-	result_string = result_string - counter;
-	buffer = ft_strncpy(ft_strnew(counter), result_string, counter);
-	result_string = string_sub(result_string, counter, (str_len - counter));
+	result_string[fd] -= counter;
+	buffer = ft_strncpy(ft_strnew(counter), result_string[fd], counter);
+	result_string[fd] = string_sub(result_string[fd], counter + 1, (str_len - counter));
 	*line = buffer;
-	printf("%s\n", result_string);
 	free(buffer);
 	return (0);
 }

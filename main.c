@@ -5,20 +5,21 @@
 
 int		main(int argc, char *argv[])
 {
-	int		fd;
+	int		fd1;
+	int		fd2;
 	char	*file_name;
 	char	*line;
 
 	file_name = NULL;
-	if (argc == 2)
-		file_name = argv[1];
-	else
-		printf("it's more then 1 file as an input!\n");
-
-	fd = open(file_name, O_RDONLY);
-	get_next_line(fd, &line);	
-	get_next_line(fd, &line);	
-
+	file_name = argv[1];
+	fd1 = open(file_name, O_RDONLY);
+	get_next_line(fd1, &line);
+	get_next_line(fd1, &line);		
+	get_next_line(fd1, &line);
+	fd2 = open(argv[2], O_RDONLY);
+	get_next_line(fd2, &line);
+	get_next_line(fd2, &line);
+	get_next_line(fd1, &line);
 	printf("%s\n", line);
 	return (0);
 }
