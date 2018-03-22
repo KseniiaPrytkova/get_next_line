@@ -144,3 +144,26 @@ The wind of Mt. Fuji
 I've brought on my fan!
 a gift from Edo
 ```
+
+All done! So, to run the program u need such files:
+⋅⋅*main.c
+⋅⋅*string_maker.c
+⋅⋅*i_am_string_maker.h
+⋅⋅*sample.line
+i'm using my own library, so i also need (u can use standerat libc, just remove ft_ before functions):
+⋅⋅*libft.a
+⋅⋅*libft.h
+
+run:
+```
+> gcc main.c string_maker.c libft.a
+> ./a.out sample.line 
+```
+
+and you will see:
+```
+The wind of Mt. Fuji
+I've brought on my fan!
+a gift from Edo
+>
+```
