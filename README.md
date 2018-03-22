@@ -145,6 +145,7 @@ I've brought on my fan!
 a gift from Edo
 ```
 
+#### 1.2.3 step 3
 All done! So, to run the program u need such files:
 - main.c
 - string_maker.c
