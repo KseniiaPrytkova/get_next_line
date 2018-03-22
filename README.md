@@ -159,7 +159,7 @@ All done! So, to run the program u need such files:
 - i_am_string_maker.h
 - sample.line
 
-i'm using my own library, so i also need (u can use standerat libc, just remove ft_ before functions):
+i'm using my own library, so i also need (u can use standart libc, just remove ft_ before functions):
 
 - libft.a
 - libft.h
