@@ -13,6 +13,8 @@ Initially it was not obvious to me that reading the file into a string can not b
 ### 1.1 main.c
 Here we get the value of the file descriptor by opening the file and call the function i_am_string_maker() where we first transmit the obtained value of FD.
 ``` C
+__main.c__
+
 #include "i_am_string_maker.h"
 #include <stdio.h>
 #include <fcntl.h>
@@ -56,6 +58,8 @@ So the function i_am_for_reading() takes as parameters the file descriptor and s
 In this case we will read 2 bytes for 1 iteration. We will do it into intermediate buffer **buffer_for_read** with size **BUFF_SIZE + 1**.
 Next, we need to copy the buffer data to the final string **result_string**. Since we do not know the size of the file, we do not know the size of the **result_string**, and we use malloc - asking the system for memory, which corresponds to the size of bytes read. If **result_string** is already empty (means this is the first occurrence into the function), we should use bzero() first to avoid rubbish in the memory area that we requested and then apply memcpy() function, which will copy buffer's contents into **result_string**. When **result_string** is not empty anymore next 2 bytes that we will read from file and write to the buffer will simply need to be attached to existing content. We will use **join_me()** for these purposes.
 ``` C
+__string_maker.c__
+
 #include "i_am_string_maker.h"
 
 char		*join_me(char *s1, char const *s2)
@@ -122,8 +126,10 @@ int			i_am_string_maker(const int fd)
 	return (0);
 }
 ```
-#### i_am_string_maker.h
+
 ``` C
+__i_am_string_maker.h__
+
 #ifndef I_AM_STRING_MAKER_H
 # define I_AM_STRING_MAKER_H
 # include <unistd.h>
@@ -138,8 +144,8 @@ int		i_am_string_maker(const int fd);
 #endif
 ```
 
-#### sample.line
 ``` C
+__sample.line__
 The wind of Mt. Fuji
 I've brought on my fan!
 a gift from Edo
