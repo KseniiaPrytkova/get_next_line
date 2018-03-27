@@ -10,16 +10,21 @@ int		main(int argc, char *argv[])
 	char	*file_name;
 	char	*line;
 
-	file_name = NULL;
-	file_name = argv[1];
-	fd1 = open(file_name, O_RDONLY);
-	get_next_line(fd1, &line);
-	get_next_line(fd1, &line);		
-	get_next_line(fd1, &line);
-	fd2 = open(argv[2], O_RDONLY);
-	get_next_line(fd2, &line);
-	get_next_line(fd2, &line);
-	get_next_line(fd1, &line);
-	printf("%s\n", line);
+	if (argc > 0)
+	{
+		file_name = NULL;
+		file_name = argv[1];
+		fd1 = open(file_name, O_RDONLY);
+		get_next_line(fd1, &line);
+		get_next_line(fd1, &line);		
+		get_next_line(fd1, &line);
+
+		fd2 = open(argv[2], O_RDONLY);
+		get_next_line(fd2, &line);
+		get_next_line(fd2, &line);
+		get_next_line(fd1, &line);
+		printf("%s\n", line);
+	}
+
 	return (0);
 }

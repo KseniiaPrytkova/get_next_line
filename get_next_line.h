@@ -17,6 +17,7 @@
 # include "libft.h"
 
 # define BUFF_SIZE 5
+# define MAX_FILES 4864
 
 int		get_next_line(const int fd, char **line);
 
