@@ -58,8 +58,8 @@ char		*i_am_for_reading(int fd, char *result_string)
 		else
 			result_string = join_me(result_string, buffer_for_read);
 	}
-	res_str_len = ft_strlen (result_string);
-	result_string[res_str_len] = '\0';
+	if (read_bytes < 0)
+		return (NULL);
 	return(result_string);
 }
 
@@ -72,6 +72,8 @@ char	*string_sub(char *s, unsigned int start, size_t len)
 	j = 0;
 	substring = NULL;
 	string_len = ft_strlen(s);
+	if (s[start] == '\n')
+		start++;
 	if (s && start < string_len + 1 && len < string_len + 1)
 	{
 		if ((substring = malloc(sizeof(char) * len + 1)) == NULL)
@@ -95,12 +97,11 @@ int get_next_line(const int fd, char **line)
 	char		*buffer;
 	int			str_len;
 
-	if (fd < 0 || fd > MAX_FILES || BUFF_SIZE <= 0 || (line == NULL))
+	if (fd < 0 || fd > MAX_FILES || BUFF_SIZE < 0 || (line == NULL))
 		return (-1);
 	if (!result_string[fd])
-		result_string[fd] = i_am_for_reading(fd, result_string[fd]);
-	// else
-	// 	return (-1);
+		if(!(result_string[fd] = i_am_for_reading(fd, result_string[fd])))
+			return (-1);
 	if (*result_string[fd] == '\0')
 	{
 		*line = NULL;
@@ -115,7 +116,7 @@ int get_next_line(const int fd, char **line)
 	}
 	result_string[fd] -= counter;
 	buffer = ft_strncpy(ft_strnew(counter), result_string[fd], counter);
-	result_string[fd] = string_sub(result_string[fd], counter + 1, (str_len - counter));
+	result_string[fd] = string_sub(result_string[fd], counter, (str_len - counter)); // SDASDASD
 	*line = buffer;
 	free(buffer);
 	return (1);
