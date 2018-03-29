@@ -38,7 +38,7 @@ char	*join_me(char *s1, char const *s2)
 	return (result_string);
 }
 
-char		*i_am_for_reading(int fd, char *result_string)
+char	*i_am_for_reading(int fd, char *result_string)
 {
 	int				read_bytes;
 	char			buffer_for_read[BUFF_SIZE + 1];
@@ -90,14 +90,15 @@ char	*string_sub(char *s, unsigned int start, size_t len)
 	return (substring);
 }
 
-int get_next_line(const int fd, char **line)
+int		get_next_line(const int fd, char **line)
 {
 	static char	*result_string[MAX_FILES];
 	int			counter;
 	char		*buffer;
 	int			str_len;
 
-	if (fd < 0 || fd > MAX_FILES || BUFF_SIZE < 0 || (line == NULL))
+	// if (fd < 0 || fd > MAX_FILES || BUFF_SIZE < 0 || (line == NULL))
+	if (fd < 0 || fd > MAX_FILES || BUFF_SIZE < 0)
 		return (-1);
 	if (!result_string[fd])
 		if(!(result_string[fd] = i_am_for_reading(fd, result_string[fd])))
@@ -105,7 +106,7 @@ int get_next_line(const int fd, char **line)
 	if (*result_string[fd] == '\0')
 	{
 		*line = NULL;
-		return(0);
+		return (0);
 	}
 	str_len = ft_strlen(result_string[fd]);
 	counter = 0;
@@ -115,8 +116,11 @@ int get_next_line(const int fd, char **line)
 		counter++;
 	}
 	result_string[fd] -= counter;
-	buffer = ft_strncpy(ft_strnew(counter), result_string[fd], counter);
-	result_string[fd] = string_sub(result_string[fd], counter, (str_len - counter)); // SDASDASD
+	buffer = ft_strnew(counter);
+	ft_bzero(buffer, counter);
+	buffer = ft_strncpy(buffer, result_string[fd], counter);
+	// buffer = ft_strncpy(ft_strnew(counter), result_string[fd], counter);
+	result_string[fd] = string_sub(result_string[fd], counter, (str_len - counter));
 	*line = buffer;
 	free(buffer);
 	return (1);
