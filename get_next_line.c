@@ -47,6 +47,8 @@ char	*i_am_for_reading(int fd, char *result_string)
 	res_str_len = 0;
 	while ((read_bytes = read(fd, buffer_for_read, BUFF_SIZE)) > 0)
 	{
+		if (read_bytes < 0)
+			return (0);
 		buffer_for_read[read_bytes] = '\0';
 		if (!(result_string))
 		{
@@ -122,6 +124,6 @@ int		get_next_line(const int fd, char **line)
 	// buffer = ft_strncpy(ft_strnew(counter), result_string[fd], counter);
 	result_string[fd] = string_sub(result_string[fd], counter, (str_len - counter));
 	*line = buffer;
-	free(buffer);
+	// ????????????// free(buffer);
 	return (1);
 }
