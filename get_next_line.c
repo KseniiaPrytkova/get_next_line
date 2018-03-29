@@ -47,8 +47,6 @@ char	*i_am_for_reading(int fd, char *result_string)
 	res_str_len = 0;
 	while ((read_bytes = read(fd, buffer_for_read, BUFF_SIZE)) > 0)
 	{
-		if (read_bytes < 0)
-			return (0);
 		buffer_for_read[read_bytes] = '\0';
 		if (!(result_string))
 		{
@@ -99,12 +97,13 @@ int		get_next_line(const int fd, char **line)
 	char		*buffer;
 	int			str_len;
 
-	// if (fd < 0 || fd > MAX_FILES || BUFF_SIZE < 0 || (line == NULL))
-	if (fd < 0 || fd > MAX_FILES || BUFF_SIZE < 0)
+	if (fd < 0 || fd > MAX_FILES || BUFF_SIZE < 0 || (line == NULL))
 		return (-1);
-	if (!result_string[fd])
-		if(!(result_string[fd] = i_am_for_reading(fd, result_string[fd])))
-			return (-1);
+	if((result_string[fd] = i_am_for_reading(fd, result_string[fd])) == NULL)
+	{
+		*line = NULL;
+		return (-1);
+	}
 	if (*result_string[fd] == '\0')
 	{
 		*line = NULL;
@@ -119,11 +118,8 @@ int		get_next_line(const int fd, char **line)
 	}
 	result_string[fd] -= counter;
 	buffer = ft_strnew(counter);
-	ft_bzero(buffer, counter);
 	buffer = ft_strncpy(buffer, result_string[fd], counter);
-	// buffer = ft_strncpy(ft_strnew(counter), result_string[fd], counter);
 	result_string[fd] = string_sub(result_string[fd], counter, (str_len - counter));
 	*line = buffer;
-	// ????????????// free(buffer);
 	return (1);
 }
