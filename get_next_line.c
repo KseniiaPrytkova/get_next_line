@@ -57,7 +57,7 @@ char	*i_am_for_reading(int fd, char *result_string)
 		}
 		else
 			result_string = join_me(result_string, buffer_for_read);
-		ft_strclr(buffer_for_read);
+			ft_strclr(buffer_for_read);
 	}
 	if (read_bytes < 0)
 		return (NULL);
@@ -99,17 +99,16 @@ int		get_next_line(const int fd, char **line)
 	char		*buffer;
 	int			str_len;
 
-	printf("fd in gnl:%i\n", fd);
 	if (fd < 0 || fd > MAX_FILES || BUFF_SIZE < 0 || line == NULL)
 		return (-1);
 	if ((result_string[fd] = i_am_for_reading(fd, result_string[fd])) == NULL)
 	{
-		// *line = NULL;
+		/* *line = NULL; */
 		return (-1);
 	}
 	if (*result_string[fd] == '\0')
 	{
-		// *line = NULL;
+		/* *line = NULL; */
 		return (0);
 	}
 	str_len = ft_strlen(result_string[fd]);
