@@ -12,7 +12,7 @@ int		main(int argc, char *argv[])
 	int	ret;
 
 	fd1 = open(argv[1], O_RDONLY);
-	if (argc > 0)
+	if (argc > 1)
 	{
 		file_name = NULL;
 		file_name = argv[1];
