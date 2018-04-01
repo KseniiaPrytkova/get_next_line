@@ -6,10 +6,10 @@
 
 int		main(int argc, char *argv[])
 {
-	int		fd1;
-	int		fd2;
+	int	fd1;
+	int	fd2;
 	char	*line;
-	int		ret;
+	int	ret;
 
 	fd1 = open(argv[1], O_RDONLY);
 	fd2 = open(argv[2], O_RDONLY);
