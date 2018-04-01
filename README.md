@@ -180,3 +180,38 @@ a gift from Edo
 ```
 
 ## 2) come back to get_next_line
+So, this function returns a line read from a file descriptor. “Line” is a succession of characters that end with ’\n’ (ascii code
+0x0a) or with End Of File (EOF). Also you are able to manage multiple file descriptor with my get_next_line. For example, if the file descriptors 3, 4 and 5 are accessible for reading, then you can call get_next_line once on 3, once on 4, once again on 3 then once on 5 etc. without losing the reading thread on each of the descriptors.
+
+### 2.1 to test the program with single FD use main_one.c
+run:
+```
+$> make -C libft/ fclean && make -C libft/
+$> clang -Wall -Wextra -Werror -I libft/includes -o get_next_line.o -c get_next_line.c
+$> clang -Wall -Wextra -Werror -I libft/includes -o main_one.o -c main_one.c
+$> clang -o test_gnl main_one.o get_next_line.o -I libft/includes -L libft/ -lft
+$> ./test_gnl sample.line
+```
+
+and you will see:
+```
+>
+The wind of Mt. Fuji
+I've brought on my fan!
+a gift from Edo
+bla bla bla
+Found process 25888 (test_gnl) from partial name test
+Process 25888: 153 nodes malloced for 17 KB
+Process 25888: 0 leaks for 0 total leaked bytes.
+>
+```
+
+### 2.2 to test the program with single FD use main_two.c
+run:
+```
+$> make -C libft/ fclean && make -C libft/
+$> clang -Wall -Wextra -Werror -I libft/includes -o get_next_line.o -c get_next_line.c
+$> clang -Wall -Wextra -Werror -I libft/includes -o main_two.o -c main_two.c
+$> clang -o test_gnl main_one.o get_next_line.o -I libft/includes -L libft/ -lft
+$> ./test_gnl sample.line sample1.line
+```
