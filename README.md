@@ -90,9 +90,9 @@ char		*join_me(char *s1, char const *s2)
 
 char		*i_am_for_reading(int fd, char *result_string)
 {
-	int				read_bytes;
+	int			read_bytes;
 	char			buffer_for_read[BUFF_SIZE + 1];
-	int				counter;
+	int			counter;
 	size_t			res_str_len;
 
 	res_str_len = 0;
