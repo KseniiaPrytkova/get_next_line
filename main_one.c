@@ -6,10 +6,10 @@
 
 int		main(int argc, char *argv[])
 {
-	int		fd1;
+	int	fd1;
 	char	*file_name;
 	char	*line;
-	int		ret;
+	int	ret;
 
 	fd1 = open(argv[1], O_RDONLY);
 	if (argc > 0)
