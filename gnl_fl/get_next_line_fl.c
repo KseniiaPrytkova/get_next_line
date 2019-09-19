@@ -2,6 +2,32 @@
 #include "libft/libft.h"
 #include "get_next_line_fl.h"
 
+char	*join_me(char *s1, char const *s2)
+{
+	size_t	s1_len;
+	size_t	s2_len;
+	char	*result_string;
+
+	s1_len = 0;
+	s2_len = 0;
+	result_string = NULL;
+	if (s1 != NULL && s2 != NULL)
+	{
+		s1_len = ft_strlen(s1);
+		s2_len = ft_strlen(s2);
+		result_string = ft_strnew(s1_len + s2_len + 1);
+		if (result_string)
+		{
+			ft_strncpy(result_string, s1, s1_len);
+			free(s1);
+			ft_strncpy((result_string + s1_len), s2, s2_len);
+		}
+		else
+			return (NULL);
+	}
+	return (result_string);
+}
+
 static char	*string_sub(char *s, unsigned int start, size_t len)
 {
 	char	*substring;
@@ -29,34 +55,6 @@ static char	*string_sub(char *s, unsigned int start, size_t len)
 	return (substring);
 }
 
-char* return_me_string(char *result_string, const int fd)
-{
-	char buffer[BUFF_SIZE + 1];
-	int read_bytes;
-
-	read_bytes = 0;
-	while (!(ft_strchr(result_string, '\n')))
-	{
-		read_bytes = read(fd, buffer, BUFF_SIZE);
-		//printf("____________________________________________\n");
-		if (read_bytes == -1)
-			return NULL;
-			//return -1;
-		buffer[read_bytes] = '\0';
-		result_string = ft_strjoin(result_string, buffer);
-		if (read_bytes == 0)
-		{
-			if (*result_string == '\0')
-				//return (-1);
-				return (NULL);
-			else
-				break;
-		}
-	}
-	//return (1);
-	return (result_string);
-}
-
 void set_line(char **result_string, char **line)
 {
 	int str_len;
@@ -72,7 +70,7 @@ void set_line(char **result_string, char **line)
 	*line = ft_strncpy(*line, *result_string, counter);
 
 	*result_string = string_sub(*result_string, counter,
-							(str_len - counter));
+	 						(str_len - counter));
 }
 
 int get_next_line_fl(const int fd, char **line)
@@ -91,7 +89,8 @@ int get_next_line_fl(const int fd, char **line)
 		if ((read_bytes = read(fd, buffer, BUFF_SIZE)) < 0)
 			return (-1);
 		buffer[read_bytes] = '\0';
-		result_string = ft_strjoin(result_string, buffer);
+		//result_string = ft_strjoin(result_string, buffer);
+		result_string = join_me(result_string, buffer);
 		if (*result_string == '\0' && read_bytes == 0)
 			return (0);
 		else if (read_bytes == 0)
@@ -100,4 +99,5 @@ int get_next_line_fl(const int fd, char **line)
 	set_line(&result_string, line);
 	return (1);
 }
+
 
