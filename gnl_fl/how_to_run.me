@@ -1,0 +1,5 @@
+make -C libft/ fclean && make -C libft/
+clang -Wall -Wextra -Werror -I libft/includes -o get_next_line_fl.o -c get_next_line_fl.c
+clang -Wall -Wextra -Werror -I libft/includes -o main_one.o -c main_one.c
+clang -o test_gnl main_one.o get_next_line_fl.o -I libft/includes -L libft/ -lft
+./test_gnl sample.line sample1.line
